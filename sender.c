@@ -51,6 +51,8 @@ bool destroy_memory_block(char *filename){
 
 int main(int argc, char *argv[]){
 
+	int a = argc;
+
 	char *blok = attach_memory_block(FILENAME, SIZE);
 
         if(blok == NULL){
@@ -61,10 +63,10 @@ int main(int argc, char *argv[]){
         sem_t *sem_send = sem_open(SEM_SENDER, 0);
         sem_t *sem_rece = sem_open(SEM_RECEIVER, 1);
 
-	for(int i = 0; i< 5; i++){
+	for(int i = 0; i< a-1; i++){
 		sem_wait(sem_rece);
-		printf("Sending: \"%s\"\n", argv[1]);
-		sprintf(blok, "%s", argv[1]);
+		printf("Sending: \"%s\"\n", argv[i+1]);
+		sprintf(blok, "%s", argv[i+1]);
 		sem_post(sem_send);
 	}
 
